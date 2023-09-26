@@ -13,7 +13,8 @@ class CustomersController extends Controller
     public function index()
     {
         $customers = Customer::all();
-        return $customers;
+        $title = 'List of customers';
+        return view ('customers.index', compact('title','customers'));
     }
 
     /**
@@ -68,6 +69,8 @@ class CustomersController extends Controller
      */
     public function destroy(Customer $customer)
     {
-        //
+        $customer ->delete();
+        return $customer;
+        
     }
 }

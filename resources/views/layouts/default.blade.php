@@ -32,7 +32,7 @@
             @endif
 
             <div class="max-w-7xl mx-auto p-6 lg:p-8">
-                <h1 class="text-5xl font-semibold text-center text-gray-900 dark:text-white sm:text-6xl md:text-7xl">Laravel</h1>
+                @yield('content')
             </div>
         </div>
     </body>

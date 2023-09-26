@@ -13,7 +13,10 @@ class ProductsController extends Controller
     public function index()
     {
         $products = Product::all();
-        return $products;
+        
+        $title = 'List of products';
+        
+        return view ('products.index', compact('title','products'));
     }
 
     /**
@@ -68,6 +71,7 @@ class ProductsController extends Controller
      */
     public function destroy(Product $product)
     {
-        //
+        $product ->delete();
+        return $product;
     }
 }

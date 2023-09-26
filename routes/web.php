@@ -24,8 +24,6 @@ Route::get('/products',
 
 Route::resources([
     'products' => \App\Http\Controllers\ProductsController::class,
-]);
-
-Route::resources([
     'customers' => \App\Http\Controllers\CustomersController::class,
 ]);
+
