@@ -56,7 +56,8 @@ class ProductsController extends Controller
      */
     public function show(Product $product)
     {
-        return $product;
+        $title='Détails du produit';
+        return view('products.show', compact('title','product'));
     }
 
     /**
@@ -64,7 +65,8 @@ class ProductsController extends Controller
      */
     public function edit(Product $product)
     {
-        //
+        $title='Editez le produit';
+        return view('products.edit', compact('title','product'));
     }
 
     /**
@@ -72,9 +74,22 @@ class ProductsController extends Controller
      */
     public function update(Request $request, Product $product)
     {
+        $request->validate([
+            'name' => 'required|min:3|max:255',
+            'description' => 'required|min:3|max:255',
+            'price' => 'required|numeric|between:0,2500',
+            
+        ]);
+        /*dd($request->all());*/
         $product->update($request->all());
 
-        return $product;
+        if($product->wasChanged()){
+            return redirect()->route('products.show', $product)->with('success', 'Le produit a été modifié');
+        }else{
+            return redirect()->route('products.show', $product)->with('Attention', 'Aucune modification a été faite');
+        }
+
+        
     }
 
     /**
