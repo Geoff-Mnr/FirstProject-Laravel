@@ -4,7 +4,7 @@
     <h1 class="text-5xl font-semibold text-center text-gray-900 dark:text-white sm:text-6xl md:text-7xl">{{ $title }}
     </h1>
     <a href="{{ route('customers.create') }}"
-        class="text-2xl font-semibold text-center text-gray-900 dark:text-white sm:text-3xl md:text-4xl">Create Customer</a>
+        class="text-2xl font-semibold text-center text-gray-900 dark:text-white sm:text-3xl md:text-4xl">Créer un client</a>
     <table class="table-auto">
         <thead>
             <tr>

@@ -13,7 +13,7 @@ class CustomersController extends Controller
     public function index()
     {
         $customers = Customer::all();
-        $title = 'List of customers';
+        $title = 'Liste des clients';
         return view ('customers.index', compact('title','customers'));
     }
 
@@ -22,7 +22,8 @@ class CustomersController extends Controller
      */
     public function create()
     {
-        //
+        $title = 'Créer un client';
+        return view ('customers.create', compact('title'));
     }
 
     /**
@@ -30,12 +31,22 @@ class CustomersController extends Controller
      */
     public function store(Request $request)
     {
+
+        $request->validate([
+            'name' => 'required|min:3|max:255',
+            'firstname' => 'required|min:3|max:255',
+            'email' => 'required|min:3|max:255',
+            'adress'=> 'required|min:3|max:255',
+            'phonenumber'=> 'required|min:3|max:255',
+            
+        ]);
+
         $input = $request->all();
         $input['is_active'] = true;
         
-
+        
         $customer = Customer::create($input);
-        return $customer;
+        return redirect()->route('customers.index');
     }
 
     /**
@@ -43,7 +54,8 @@ class CustomersController extends Controller
      */
     public function show(Customer $customer)
     {
-        return $customer;
+        $title='Détails du client';
+        return view('customers.show', compact('title','customer'));
     }
 
     /**
@@ -51,7 +63,8 @@ class CustomersController extends Controller
      */
     public function edit(Customer $customer)
     {
-        //
+        $title='Editez le client';
+        return view('customers.edit', compact('title','customer'));
     }
 
     /**
@@ -59,9 +72,22 @@ class CustomersController extends Controller
      */
     public function update(Request $request, Customer $customer)
     {
+        $request->validate([
+            'name' => 'required|min:3|max:255',
+            'firstname' => 'required|min:3|max:255',
+            'email' => 'required|min:3|max:255',
+            'adress'=> 'required|min:3|max:255',
+            'phonenumber'=> 'required|min:3|max:255',
+            
+        ]);
+
         $customer->update($request->all());
 
-        return $customer;
+        if($customer->wasChanged()){
+            return redirect()->route('customers.show', $customer)->with('success', 'Le produit a été modifié');
+        }else{
+            return redirect()->route('customers.show', $customer)->with('Attention', 'Aucune modification a été faite');
+        }
     }
 
     /**
@@ -70,7 +96,7 @@ class CustomersController extends Controller
     public function destroy(Customer $customer)
     {
         $customer ->delete();
-        return $customer;
+        return redirect()->route('customers.index')->with('success', 'le produit a bien été supprimé');
         
     }
 }
