@@ -24,7 +24,9 @@ class ProductsController extends Controller
      */
     public function create()
     {
-        //
+        $title = 'Créer un produit';
+        return view ('products.create', compact('title'));
+
     }
 
     /**
@@ -32,12 +34,21 @@ class ProductsController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'name' => 'required|min:3|max:255|unique:products,name',
+            'description' => 'required|min:3|max:255',
+            'price' => 'required|numeric|between:100,400',
+            /*'stock' => 'required|numeric',
+            'is_active' => 'required|boolean',*/
+        ]);
+
+
         $input = $request->all();
         $input['is_active'] = true;
         $input['stock'] = 0;
 
         $product = Product::create($input);
-        return $product;
+        return redirect()->route('products.index');
     }
 
     /**
